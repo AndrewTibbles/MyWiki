@@ -1,0 +1,15 @@
+# Thumbnails
+._*
+
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+### Django ###
+*.log
+*.pot
+__pycache__/
+local_settings.py
+
+db.sqlite3
