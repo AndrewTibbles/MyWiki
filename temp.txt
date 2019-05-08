@@ -1,0 +1,10 @@
+        selector: '#id_content', 
+        plugins: [
+        'advlist autolink lists link image charmap preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code',
+        'insertdatetime media nonbreaking table contextmenu directionality autoresize',
+        'emoticons template paste textcolor colorpicker textpattern imagetools codesample'
+    ],
+    toolbar: 'codesample | bold italic sizeselect fontselect fontsizeselect | hr alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | insertfile undo redo | forecolor backcolor emoticons | code',
+    fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
+    menubar: false
