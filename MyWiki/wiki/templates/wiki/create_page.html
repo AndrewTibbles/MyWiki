@@ -1,0 +1,11 @@
+{% extends "wiki/base.html" %}
+
+{% block content %}
+    <h1 class="text-center">{{page_name}}</h1>
+    <p class="text-center">This page does not exist.</p>
+    <a  class="btn btn-primary"
+        href="{% url 'wiki:edit_page' page_name %}"
+        style="margin-left:10%;">
+    Create?
+    </a>
+{% endblock %}

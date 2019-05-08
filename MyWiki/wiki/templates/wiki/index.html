@@ -1,0 +1,63 @@
+{% extends 'wiki/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section-->
+<section>
+    <div class="container jumbotron text-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>MyWiki</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Intro Section-->
+<section class="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="h3 text-center">Introduction</h2>
+                <p class="text-big">
+                    An <strong>introduction</strong> here <strong>to catch reader's
+                        attention</strong>. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud nisi ut
+                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderi.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Index Section-->
+<section class="wiki">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="h3 text-center">Index</h2>
+                {% if pages %}
+                <div class="card text-center">
+                    <ul class="list-group list-group-flush">
+                        {% for page in pages %}
+                        <li class="list-group-item">
+                            <a href="{% url 'wiki:detail' page.title %}">
+                                {{ page.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <p>There are currently no wiki's available.</p>
+                {% endif %}
+            </div>
+            <a class="btn btn-primary" href="#" style="margin:15px 10% 10px auto;">
+                Create Page
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

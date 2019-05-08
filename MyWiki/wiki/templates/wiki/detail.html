@@ -1,0 +1,13 @@
+{% extends "wiki/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h2 class="text-primary text-center">{{ page.title }}</h2>
+<div class="card" style="margin: 10px 5%; padding: 10px;">
+    {{page.content | safe}}
+</div>
+<div style="margin: 30px 10%;">
+    <a class="btn btn-primary" href="{% url 'wiki:edit_page' page.title %}">Edit</a>
+    <a class="btn btn-primary" href="{% url 'wiki:index' %}" style="position: absolute; right: 0; margin-right:10%;">Go Back</a>
+</div>
+{% endblock %}
