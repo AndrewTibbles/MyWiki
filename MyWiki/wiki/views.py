@@ -1,5 +1,6 @@
 from django.views import generic
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Page
 
 
@@ -27,7 +28,7 @@ def View_Page(request, pk):
     except Page.DoesNotExist:
         return render(request, 'wiki/create_page.html', {'page_name': pk})
 
-
+@login_required
 def edit_page(request, pk):
     try:
         page = Page.objects.get(pk=pk)
@@ -41,7 +42,7 @@ def edit_page(request, pk):
         'content': content
     })
 
-
+@login_required
 def save_page(request, pk):
     content = request.POST['content']
     try:

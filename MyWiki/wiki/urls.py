@@ -8,3 +8,7 @@ urlpatterns = [
     path('<str:pk>/edit', views.edit_page , name='edit_page'),
     path('<str:pk>/', views.View_Page, name='detail'),
 ]
+
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]

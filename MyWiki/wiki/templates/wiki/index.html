@@ -3,8 +3,12 @@
 
 {% block content %}
 
-<!-- Hero Section-->
-<section>
+{% if request.user.is_authenticated %}
+<a href="{% url 'wiki:logout' %}" class="btn btn-primary float-right" style="margin-right: 5%;">logout</a>
+{% else %}
+<a href="{% url 'wiki:login' %}" class="btn btn-primary float-right" style="margin-right: 5%;">login</a>
+{% endif %}
+<section style="margin-top:55px;">
     <div class="container jumbotron text-center">
         <div class="row">
             <div class="col-lg-12">
@@ -13,7 +17,6 @@
         </div>
     </div>
 </section>
-
 <!-- Intro Section-->
 <section class="intro">
     <div class="container">
@@ -58,6 +61,7 @@
             </a>
         </div>
     </div>
+    <img src="{% static 'wiki/image/yellowbubble.png' %}" style="margin: 10px 30% 10px 30%;" />
 </section>
 
 {% endblock %}

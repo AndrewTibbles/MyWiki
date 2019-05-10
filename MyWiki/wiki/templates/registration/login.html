@@ -1,0 +1,58 @@
+{% extends "wiki/base.html" %}
+
+{% block content %}
+<br>
+{% if form.errors %}
+<p class="text-center" style="margin: 0 25% 0 20%">Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p class="text-center" style="margin: 0 25% 0 20%">Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+{% else %}
+<p class="text-center" style="margin: 10px 40% 10px 40%; font-weight: bold; font-size: 18px; background-color:rgb(219, 226, 235); border: black solid 2px; border-radius:10px; padding:2px; box-shadow: 4px 3px;">Please login to view this page.</p>
+{% endif %}
+{% endif %}
+<form method="post" action="{% url 'wiki:login' %}">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Sign In</h5>
+                        <div class="form-label-group">
+                            <label for="inputUsername"
+                                style="margin-bottom: -10px;">{{ form.username.label_tag }}</label>
+                            <input 
+                                name="username"  
+                                value="{{ form.username.value | default:'' }}"
+                                placeholder="Username" required autofocus
+                                type="text" 
+                                class="form-control">
+                        </div>
+                        <br>
+                        <div class="form-label-group">
+                            <label for="inputPassword"
+                                style="margin-bottom: -10px;">{{ form.password.label_tag }}</label>
+                            <input 
+                                name="password"
+                                value="{{ form.password.value | default:''}}" 
+                                placeholder="Password" required autofocus
+                                type="password" 
+                                class="input form-control">
+                        </div>
+                        <br>
+                        <input type="submit" class="btn btn-lg btn-primary btn-block text-uppercase" value="login">
+                        <input type="hidden" name="next" value="{{ next }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{# Assumes you setup the password_reset view in your URLconf #}
+{# <!--<p><a href="{% url 'password_reset' %}">Lost password?</a></p>--> #}
+
+{% endblock %}
