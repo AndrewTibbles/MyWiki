@@ -15,8 +15,12 @@
     </ul>
     {% endif %}
 
-    {% block content %}
-    {% endblock content %}
+{% block content %}
+    NO CONTENT PROVIDED
+    {% block contentTitle %}
+    {% endblock %}
+{% endblock content %}
+
 
     {% include 'wiki/footer.html' %}
     {% include 'wiki/scripts.html' %}

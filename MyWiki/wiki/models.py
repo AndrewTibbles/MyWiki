@@ -26,3 +26,9 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', ]
+
+class UserFileUpload(models.Model):
+    upload = models.FileField(upload_to='upload/')
+
+    def __str__(self):
+        return self.upload.name

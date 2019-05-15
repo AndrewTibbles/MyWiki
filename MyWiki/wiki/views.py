@@ -2,7 +2,9 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from .models import Page, SignUpForm
+
+from .forms import UploadFileForm
+from .models import Page, SignUpForm, UserFileUpload
 
 class IndexView(generic.ListView):
     template_name = 'wiki/index.html'
@@ -85,3 +87,16 @@ def signup_page(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def upload_file(request):
+    context = {}
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UploadFileForm()
+    context['form'] = form
+    context['files'] = UserFileUpload.objects.all().order_by('upload')
+    return render(request, 'wiki/upload.html', context)
