@@ -1,6 +1,6 @@
-{% extends "wiki/base.html" %}
+{% extends "wiki/base.html" %} 
+{% load staticfiles %} 
 
-{% load staticfiles %}
 {% block content %}
 <header>
     <h3 class="text-center">Editing: {{ page_name }}</h3>
@@ -23,5 +23,12 @@
         <input class="btn btn-primary" name="Save" type="submit" value="Save" style="margin-right:5%; display: inline-block; min-width: 150px;">
         <button class="btn btn-primary" name="Cancel" style="right: 0; margin-left:5%; display: inline-block;  min-width: 150px; color: white;">Cancel</button>
     </div>
+</form>
+<hr>
+<form method="post" action="{% url 'wiki:delete_page' page_name %}" class="text-center" style="background-color: beige; border-radius: 10px; border: 2px solid black; padding-bottom: 20px; margin: 0 25% 0 25%;">
+    {% csrf_token %}
+    <br>
+    <h5>Want to delete this post?</h5>
+    <input class="btn btn-danger" name="Delete" type="submit" value="Delete" style="width:250px;">
 </form>
 {% endblock %}

@@ -1,88 +1,38 @@
 {% load static %}
-
 <!-- Footer -->
-<footer class="page-footer font-small pt-4 text-white fixed-bottom" style="background-color: #2196f3!important; margin-bottom: -17px;">
-
+<footer class="page-footer font-small pt-1 text-white" style="background-color: #263238!important;">
   <!-- Footer Links -->
-  <div class="container-fluid text-center text-md-left">
-
-    <!-- Grid row -->
-    <div class="row">
-
+  <div class="container text-center text-md-left">
       <!-- Grid column -->
-      <div class="col-md-6 mt-md-0 mt-3">
-
-        <!-- wiki -->
-        <h5 class="text-uppercase">Wiki Footer</h5>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.</p>
-
+      <div class="col-md-12 mx-auto">
+        <!-- Content -->
+        <h5 class="font-weight-bold text-uppercase mt-2 mb-2 text-center" style="font-size:16px;">Footer Content</h5>
+        <p style="font-size:14px; text-align: center;">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </p>
       </div>
       <!-- Grid column -->
-
-      <hr class="clearfix w-100 d-md-none pb-3">
-
-      <!-- Grid column -->
-      <div class="col-md-3 mb-md-0 mb-3">
-
-        <!-- Links -->
-        <h5 class="text-uppercase">Links</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Link 1</a>
-          </li>
-          <li>
-            <a href="#!">Link 2</a>
-          </li>
-          <li>
-            <a href="#!">Link 3</a>
-          </li>
-          <li>
-            <a href="#!">Link 4</a>
-          </li>
-        </ul>
-
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-md-3 mb-md-0 mb-3">
-
-        <!-- Links -->
-        <h5 class="text-uppercase">Links</h5>
-
-        <ul class="list-unstyled">
-          <li>
-            <a href="#!">Link 1</a>
-          </li>
-          <li>
-            <a href="#!">Link 2</a>
-          </li>
-          <li>
-            <a href="#!">Link 3</a>
-          </li>
-          <li>
-            <a href="#!">Link 4</a>
-          </li>
-        </ul>
-
-      </div>
-      <!-- Grid column -->
-
-    </div>
-    <!-- Grid row -->
-
   </div>
   <!-- Footer Links -->
-
+  <!-- Call to action -->
+  {% if not request.user.is_authenticated %}
+  <hr>
+  <ul class="list-unstyled list-inline text-center py-1">
+    <li class="list-inline-item">
+      <h5 class="mb-1" style="font-size:18px;">Register for free</h5>
+    </li>
+    <li class="list-inline-item">
+      <a href="{% url 'wiki:signup_page' %}" class="btn btn-danger btn-rounded">Sign up!</a>
+    </li>
+  </ul>
+  {% endif %}
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-9" style="background-color: rgba(0,0,0,.2);">
-    <p style="line-height: 60px;">
+  <div class="footer-copyright text-center py-9" style="background-color: rgba(0,0,0,.2);;">
+    <p style="padding: 15px 0 15px 0; margin-bottom:0px;">
       &copy; 2019. All rights reserved. MyWiki created by Andrew Tibbles.
     </p>
   </div>
   <!-- Copyright -->
-
 </footer>
-<!-- Footer -->

@@ -1,0 +1,14 @@
+{% extends "wiki/base.html" %}
+
+{% block content %}
+
+<h1 class="text-center" style="margin: 0 20% 0 20%;">Are you sure you want to delete the following page:</h1>
+<br>
+<h2 class="text-center"><strong>{{ page_name }}</strong></h2>
+
+<form method='POST' class="text-center" action="{% url 'wiki:delete_confirm' page_name %}">
+    {% csrf_token %}
+    <br>
+    <button class='btn btn-danger' name="Delete" type="submit" value="Delete" style="width:20%;">Yes, delete</button>
+</form>
+{% endblock %}

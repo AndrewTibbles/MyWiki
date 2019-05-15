@@ -1,0 +1,155 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+
+
+
+<form method="post">
+    {% csrf_token %}
+    <div class="container">
+        <h1 class="text-center">Register</h1>
+        <p class="text-center">Please fill in this form to create an account.</p>
+
+        <div class="fieldWrapper">
+            {{ form.username.errors }}
+            <label for="{{ form.username.id_for_label }}" class="label-fixer">{{ form.username.label_tag }}</label>
+            <input name="{{ form.username.name }}" id="{{ form.username.id_for_label }}" type="text"
+                placeholder='Username' {% if form.username.value != None %}
+                value="{{ form.username.value|stringformat:'s' }}" {% endif %} {% if form.username.field.max_length %}
+                maxlength="{{ form.username.field.max_length }}" {% endif %} {% if form.username.field.required %}
+                required {% endif %}>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.first_name.errors }}
+            <label for="{{ form.first_name.id_for_label }}" class="label-fixer">{{ form.first_name.label_tag }}</label>
+            <input name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}" type="text"
+                placeholder='Forename' {% if form.first_name.value != None %}
+                value="{{ form.first_name.value|stringformat:'s' }}" {% endif %}
+                {% if form.first_name.field.max_length %} maxlength="{{ form.first_name.field.max_length }}" {% endif %}
+                {% if form.first_name.field.required %} required {% endif %}>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.last_name.errors }}
+            <label for="{{ form.last_name.id_for_label }}" class="label-fixer">{{ form.last_name.label_tag }}</label>
+            <input name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" type="text"
+                placeholder='Surname' {% if form.last_name.value != None %}
+                value="{{ form.last_name.value|stringformat:'s' }}" {% endif %} {% if form.last_name.field.max_length %}
+                maxlength="{{ form.last_name.field.max_length }}" {% endif %} {% if form.last_name.field.required %}
+                required {% endif %}>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.email.errors }}
+            <label for="{{ form.email.id_for_label }}" class="label-fixer">{{ form.email.label_tag }}</label>
+            <input name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" type="text" placeholder='Email'
+                {% if form.email.value != None %} value="{{ form.email.value|stringformat:'s' }}" {% endif %}
+                {% if form.email.field.max_length %} maxlength="{{ form.email.field.max_length }}" {% endif %}
+                {% if form.email.field.required %} required {% endif %}>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.password1.errors }}
+            <label for="{{ form.password1.id_for_label }}" class="label-fixer">{{ form.password1.label_tag }}</label>
+            <input name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}" type="password"
+                placeholder='Password' {% if form.password1.value != None %}
+                value="{{ form.password1.value|stringformat:'s' }}" {% endif %} {% if form.password1.field.max_length %}
+                maxlength="{{ form.password1.field.max_length }}" {% endif %} {% if form.password1.field.required %}
+                required {% endif %}>
+        </div>
+
+        <div class="fieldWrapper">
+            {{ form.password2.errors }}
+            <label for="{{ form.password2.id_for_label }}" class="label-fixer">{{ form.password2.label_tag }}</label>
+            <input name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}" type="password"
+                placeholder='Password Confirm' {% if form.password2.value != None %}
+                value="{{ form.password2.value|stringformat:'s' }}" {% endif %} {% if form.password2.field.max_length %}
+                maxlength="{{ form.password2.field.max_length }}" {% endif %} {% if form.password2.field.required %}
+                required {% endif %}>
+        </div>
+
+        <p class="text-center" style="margin-top: 5px;">By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+        <button class="btn registerbtn" type="submit">Register</button>
+    </div>
+
+    <div class="container signin">
+        <p>Already have an account? <a href="{% url 'wiki:login' %}">Sign in</a>.</p>
+
+</form>
+
+<br>
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .label-fixer {
+        margin-bottom: -10px;
+    }
+
+.fieldWrapper{
+    margin:-10px 10% -10px 10%;
+}
+    /* Add padding to containers */
+    form>.container {
+        padding: 16px;
+        background-color: #f4f4f4;
+        border-radius: 10px;
+    }
+
+    /* Full-width input fields */
+    input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 10px;
+    }
+
+    input[type=text]:focus,
+    input[type=password]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    /* Overwrite default styles of hr */
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* Set a style for the submit button */
+    .registerbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    .registerbtn:hover {
+        opacity: 1;
+    }
+
+    /* Add a blue text color to links */
+    a {
+        color: dodgerblue;
+    }
+
+    /* Set a grey background color and center the text of the "sign in" section */
+    .signin {
+        background-color: #f1f1f1;
+        text-align: center;
+    }
+</style>
+{% endblock %}

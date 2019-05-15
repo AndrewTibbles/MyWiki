@@ -1,8 +1,8 @@
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Page
-
+from django.contrib.auth import login, authenticate
+from .models import Page, SignUpForm
 
 class IndexView(generic.ListView):
     template_name = 'wiki/index.html'
@@ -53,3 +53,35 @@ def save_page(request, pk):
     if 'Save' in request.POST:
         page.save()
     return redirect(page)
+
+@login_required
+def delete_page(request, pk):
+    try:
+        Page.objects.get(pk=pk)
+        return render(request, "wiki/delete_page.html",
+        {
+            'page_name': pk
+        })
+    except Page.DoesNotExist:
+        return redirect('wiki:index')
+
+@login_required
+def delete_confirm(request, pk):
+    page = Page.objects.get(pk=pk)
+    if 'Delete' in request.POST:
+        page.delete()
+    return redirect('wiki:index')
+
+def signup_page(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('wiki:index')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
