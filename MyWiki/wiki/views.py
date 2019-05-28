@@ -2,6 +2,8 @@ from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from django.http import HttpResponse
+from django.db.models import F
 
 from .forms import UploadFileForm
 from .models import Page, SignUpForm, UserFileUpload
@@ -25,6 +27,9 @@ class DetailView(generic.DetailView):
 def View_Page(request, pk):
     try:
         page = Page.objects.get(pk=pk)
+        page.counter = F('counter') + 1
+        page.save(update_fields=['counter'])
+        page.refresh_from_db()
         return render(request, 'wiki/detail.html', {'page': page})
 
     except Page.DoesNotExist:
@@ -88,7 +93,7 @@ def signup_page(request):
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-
+@login_required
 def upload_file(request):
     context = {}
     if request.method == 'POST':
@@ -100,3 +105,27 @@ def upload_file(request):
     context['form'] = form
     context['files'] = UserFileUpload.objects.all().order_by('upload')
     return render(request, 'wiki/upload.html', context)
+
+def test_500_error(request):
+    # Return an "Internal Server Error" 500 response code.
+    return HttpResponse(status=500)
+
+def test_404_error(request):
+    # Return an "Internal Server Error" 404 response code.
+    return HttpResponse(status=404)
+
+def test_407_error(request):
+    # Return an "Internal Server Error" 407 response code.
+    return HttpResponse(status=407)
+
+#import logging
+
+#from django.http import HttpResponse
+
+# This retrieves a Python logging instance (or creates it)
+#logger = logging.getLogger(__name__)
+
+#def index(request):
+    # Send the Test!! log message to standard out
+ #   logger.error("Test!!")
+ #   return HttpResponse("Hello logging world.")

@@ -2,25 +2,52 @@
 {% load static %}
 
 {% block content %}
+{% block contentTitle %}<h2 class="text-center" style="font-weight: bold;">File Upload</h2>{% endblock %}
 <section>
-{% block contentTitle %}Uploaded Files{% endblock %}
-    <form method='POST' enctype='multipart/form-data' action="{% url 'wiki:upload_page' %}">
-    {% csrf_token %}
-        {{form}}    
-    <input type='submit' value="Upload">
-    </form>
+    <h5 style="margin-left:15%;">Uploaded Files:</h5>
+    <div class="d-flex justify-content-center uploaded">
+        {% if files %}
+        <ul>
+            {% for file in files %}
+            <li><a href="{{file.upload.url}}">{{file.upload.name}}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No uploaded files</p>
+        {% endif %}
+    </div>
+    <section>
+        <h5 style="margin-left:15%;">Upload Files:</h5>
 
-</section>
-<hr/>
-<section>
-{% if files %}
-    <ul>
-    {% for file in files %}
-    <li><a href="{{file.upload.url}}">{{file.upload.name}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-<p>No uploaded files</p>
-{% endif %}
-</section>
-{% endblock %}
+        <form class="text-center" method='POST' enctype='multipart/form-data' action="{% url 'wiki:upload_page' %}">
+            {% csrf_token %}
+            <div class="custom-file mb-3" style="margin: 10px 25% 10px 25%;">
+                <div class="w-50 file-input custom-file-label">
+                    {{form.upload}}
+                </div>
+            </div>
+            <input type='submit' value="Upload">
+        </form>
+    </section>
+    <style>
+        .file-input>input[type="file"] {
+            pointer-events: all;
+            cursor: pointer;
+        }
+
+        .file-input>input::-webkit-file-upload-button {
+            visibility: hidden;
+        }
+        .uploaded ul{ list-style-type: none; }
+        .uploaded li{
+            border: lightslategray 1px solid;
+            border-radius: 10px;
+            padding-right:150px;
+            padding-left:150px;
+            padding-top:5px;
+            padding-bottom:5px;
+            margin-top:10px;
+            text-align: center;
+        }
+    </style>
+    {% endblock %}
