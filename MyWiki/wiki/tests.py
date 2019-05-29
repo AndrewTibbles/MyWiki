@@ -2,22 +2,15 @@ from django.test import TestCase, Client
 from .models import Page
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+from .views import upload_file, delete_confirm
 
-class RunningTest(TestCase):
-    def setUp(self):
-        pass
+class IndexPageTest(TestCase):
 
-    def tearDown(self):
-        pass
-
-    def this_wont_run(self):
-        print('Fail')
-
-    def test_this_will(self):
-        print('Win')
-
-
-class PageNoneTest(TestCase):
+    def test_index_page(self):
+        response = self.client.get(reverse('wiki:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Index")
 
     #
     # Tests the index page for a case that presents the following text upon no pages found.
@@ -29,14 +22,6 @@ class PageNoneTest(TestCase):
             response, "There are currently no wiki's available.")
 
 
-class IndexPageTest(TestCase):
-
-    def test_index_page(self):
-        response = self.client.get(reverse('wiki:index'))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Index")
-
-
 class PageCreationTestCase(TestCase):
     def setUp(self):
         page = Page.objects.create(title="hello_world", content="Hello world")
@@ -45,6 +30,8 @@ class PageCreationTestCase(TestCase):
         page = Page.objects.create(title="hello world", content="Hello world again")
         page.save()
 
+        self.user = User.objects.create_user('TestUser', 'TestUser@mywiki.com', 'TestUserpassword')
+
     def test_page_setup_case_1_content(self):
         response = self.client.get('/hello_world/')
         self.assertContains(response, "Hello world")
@@ -52,24 +39,33 @@ class PageCreationTestCase(TestCase):
     def test_page_setup_case_2_content(self):
         response = self.client.get('/hello world/')
         self.assertContains(response, "Hello world again")
-        
-class PageNavigationTestCase(TestCase):
-    client = Client()
-    def text_index_page(self):
-        response = self.client.get(reverse('wiki:index'))
-        response.status_code
-        self.assertEqual(response.status_code(), 200)
-    
-    def test_hello_world_page(self):
-        """
-        Questions with a pub_date in the past are displayed on the
-        index page.
-        """
-        get_page = Page(title="HelloWorld")
-        url = reverse('wiki:detail', args=(Page.title,))
-        response = self.client.get(url)
-        self.assertContains(response, get_page.content)
 
+    def test_page_deletion_case_2_content(self):
+        self.client.login(username='TestUser', password='TestUserpassword')
+        response = self.client.get('/hello world/edit/delete', follow=True)
+        self.assertContains(response, 'Are you sure you want to delete the following page:')
+
+    def test_page_deletion_confirm_case_2_content(self):
+        self.client.login(username='TestUser', password='TestUserpassword')
+        post_response = self.client.post('/hello world', follow=True)
+        self.assertRedirects(post_response,'/hello%20world/', status_code=301) #Expects page permanently moved
+
+class LoginTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user('TestUser', 'TestUser@mywiki.com', 'TestUserpassword')
+
+    def testLogin(self):
+        self.client.login(username='TestUser', password='TestUserpassword')
+        response = self.client.get(reverse('wiki:index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "logout")
+
+    def testLogout(self):
+        self.client.logout()
+        response = self.client.get(reverse('wiki:logout'), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Username:")
+        
 class PageViewTests(TestCase):
 
     def test_index_view(self):
@@ -85,6 +81,15 @@ class PageViewTests(TestCase):
         response = self.client.get('/accounts/signup')
         self.assertContains(response, "Register")
 
-    #def test_upload_page_view(self):
-    #    response = self.client.get('/upload/')
-    #    self.assertContains(response, "Uploaded Files:")
+    def setUp(self):
+        self.user = User.objects.create_user('TestUser', 'TestUser@mywiki.com', 'TestUserpassword')
+
+    def test_upload_page_view(self):
+        self.client.login(username='TestUser', password='TestUserpassword')
+        response = self.client.post('/upload/', follow=True)
+        self.assertContains(response, "Uploaded Files:")
+
+    def test_edit_page_view(self):
+        self.client.login(username='TestUser', password='TestUserpassword')
+        response = self.client.post('/PageNotFound/edit', follow=True)
+        self.assertContains(response, "Editing")
