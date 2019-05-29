@@ -62,6 +62,7 @@
                 <p>There are currently no wiki's available.</p>
                 {% endif %}
             </div>
+            <p style="margin-top:20px;"> The create page button is not implemeted yet use the url /&lt;your-page&gt;/</p>
             <a class="btn btn-primary" href="#" style="margin:15px 10% 10px auto;">
                 Create Page
             </a>
@@ -71,6 +72,13 @@
     {# Displays the browser used to render the page. This is part required by the brief. #}
     <p class="text-center">The browser used to load this page is {{ request.META.HTTP_USER_AGENT }}</p>
     <!--<img src="{% static 'wiki/image/yellowbubble.png' %}" style="margin: 10px 30% 10px 30%;" />-->
+    <button style="margin-left:40%;" onclick="myFunction()">Get Screen Resolution</button>
+    <p id="demo" class="text-center"></p>
 </section>
-
+<script>
+        function myFunction() {
+          var x = "Screen Resolution:\n" + "Total Width: " + screen.width + "px, " + "Total Height: " + screen.height + "px ";
+          document.getElementById("demo").innerHTML = x;
+        }
+        </script>
 {% endblock %}
