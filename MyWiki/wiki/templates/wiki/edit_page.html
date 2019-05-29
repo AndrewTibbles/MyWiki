@@ -3,9 +3,10 @@
 
 {% block content %}
 <header>
+    {# Displays the pages title #}
     <h3 class="text-center">Editing: {{ page_name }}</h3>
 </header>
-
+{# Form for the user to modify the pages content #}
 <form method="post" action="{% url 'wiki:save_page' page_name %}">
     {% csrf_token %}
     <div class="text-center">
@@ -25,6 +26,7 @@
     </div>
 </form>
 <hr>
+{# Form for the user to delete the page #}
 <form method="post" action="{% url 'wiki:delete_page' page_name %}" class="text-center" style="background-color: beige; border-radius: 10px; border: 2px solid black; padding-bottom: 20px; margin: 0 25% 0 25%;">
     {% csrf_token %}
     <br>

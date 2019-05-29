@@ -6,12 +6,14 @@
 <section>
     <h5 style="margin-left:15%;">Uploaded Files:</h5>
     <div class="d-flex justify-content-center uploaded">
+        {# Print a list of all found files #}
         {% if files %}
         <ul>
             {% for file in files %}
             <li><a href="{{file.upload.url}}">{{file.upload.name}}</a></li>
             {% endfor %}
         </ul>
+        {# If no files found print text #}
         {% else %}
         <p>No uploaded files</p>
         {% endif %}

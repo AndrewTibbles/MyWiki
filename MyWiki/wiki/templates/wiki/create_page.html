@@ -1,8 +1,11 @@
 {% extends "wiki/base.html" %}
 
 {% block content %}
+    {# Displays the pages title #}
     <h1 class="text-center">{{page_name}}</h1>
+    {# Provides some descriptive text. #}
     <p class="text-center">This page does not exist.</p>
+    {# Creates the page then pressed. #}
     <a  class="btn btn-primary"
         href="{% url 'wiki:edit_page' page_name %}"
         style="margin-left:10%;">

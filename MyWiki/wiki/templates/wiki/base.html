@@ -1,10 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
+{# Applies the head to the pages base #}
 {% include "wiki/head.html" %}
 
 <body>
+    {# Applies the header to the pages base #}
     {% include 'wiki/header.html' %}
 
     {% if messages %}
@@ -21,8 +22,9 @@
     {% endblock %}
 {% endblock content %}
 
-
+{# Applies the footer to the pages base #}
     {% include 'wiki/footer.html' %}
+{# Applies the scripts to the pages base #}
     {% include 'wiki/scripts.html' %}
 
 </body>

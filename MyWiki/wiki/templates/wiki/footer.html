@@ -1,4 +1,5 @@
 {% load static %}
+{# Displays the pages footer #}
 <!-- Footer -->
 <footer class="page-footer font-small pt-1 text-white" style="background-color: #263238!important;">
   <!-- Footer Links -->
@@ -13,10 +14,7 @@
             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
           </p>
       </div>
-      <!-- Grid column -->
   </div>
-  <!-- Footer Links -->
-  <!-- Call to action -->
   {% if not request.user.is_authenticated %}
   <hr>
   <ul class="list-unstyled list-inline text-center py-1">

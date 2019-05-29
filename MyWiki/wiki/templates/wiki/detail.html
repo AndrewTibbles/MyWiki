@@ -3,20 +3,27 @@
 
 {% block content %}
 {% load wiki_tags %}
+{# Displays the pages title #}
 <h2 class="text-primary text-center">{{ page.title }}</h2>
 
 <div style="margin: 30px 10%;">
+        {# Button to allow them to edit the current page #}
     <a class="btn btn-primary" href="{% url 'wiki:edit_page' page.title %}">Edit</a>
+    {# Returns the user to the index page. #}
     <a class="btn btn-primary" href="{% url 'wiki:index' %}" style="position: absolute; right: 0; margin-right:10%;">Go
         Back</a>
 </div>
 <div class="card" style="margin: 10px 5%; padding: 10px;">
+    {# Displays a filtered version of the content to allow markup and remove html tags provided by the input #}
     {{page.content | titleValidator | markup | safe}}
 </div>
 <div style="margin: 30px 10%;">
+    {# Button to allow them to edit the current page #}
     <a class="btn btn-primary" href="{% url 'wiki:edit_page' page.title %}">Edit</a>
+    {# Returns the user to the index page. #}
     <a class="btn btn-primary" href="{% url 'wiki:index' %}" style="position: absolute; right: 0; margin-right:10%;">Go
         Back</a>
 </div>
+{# Displays a counter to show how many times the page has been visited. This is required by the brief. #}
 <div class="text-center">This Page has been visited {{page.counter}} times.</div>
 {% endblock %}

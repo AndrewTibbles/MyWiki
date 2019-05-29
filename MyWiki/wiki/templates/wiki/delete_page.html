@@ -1,11 +1,13 @@
 {% extends "wiki/base.html" %}
 
 {% block content %}
-
+{# Displays a heading for the page #}
 <h1 class="text-center" style="margin: 0 20% 0 20%;">Are you sure you want to delete the following page:</h1>
 <br>
+{# Displays the pages title #}
 <h2 class="text-center"><strong>{{ page_name }}</strong></h2>
 
+{# Uses a model form to redirect the user when the button is pressed to confirm page deletion #}
 <form method='POST' class="text-center" action="{% url 'wiki:delete_confirm' page_name %}">
     {% csrf_token %}
     <br>
