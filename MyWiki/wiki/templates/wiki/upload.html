@@ -8,16 +8,24 @@
     <div class="d-flex justify-content-center uploaded">
         {# Print a list of all found files #}
         {% if files %}
-        <ul>
-            {% for file in files %}
-            <li><a href="{{file.upload.url}}">{{file.upload.name}}</a></li>
-            {% endfor %}
-        </ul>
-        {# If no files found print text #}
-        {% else %}
-        <p>No uploaded files</p>
-        {% endif %}
+        <table colspan="2" width="90%" class="border">
+                <tr class="border" >
+                  <th width="60%" class="text-center border">File</td>
+                  <th width="40%" class="text-center border" >Download</td> 
+                </tr>
+              {% for file in files %}
+                <tr class="border">
+                  <td width="60%" lass="border"><a href="{{file.upload.url}}">{{file.upload.name}}</a></td>
+                  <td width="40%"class="text-center border" ><a href="/download/{{file}}" style="text-decoration:None">Download here</a></td>
+                </tr>
+              {% endfor %}  
+              {# If no files found print text #}
+              {% else %}
+              <p>No uploaded files</p>
+              {% endif %}
+             </table>    
     </div>
+    <br>
     <section>
         <h5 style="margin-left:15%;">Upload Files:</h5>
 
@@ -50,6 +58,11 @@
             padding-bottom:5px;
             margin-top:10px;
             text-align: center;
+        }
+
+        .border {
+            border:black 1px solid;
+            border-radius: 10px;
         }
     </style>
     {% endblock %}

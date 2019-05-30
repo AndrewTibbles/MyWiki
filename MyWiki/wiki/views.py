@@ -1,8 +1,10 @@
+import os
+from django.conf import settings
 from django.views import generic
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.db.models import F
 
 from .forms import UploadFileForm
@@ -106,6 +108,16 @@ def upload_file(request):
     context['form'] = form
     context['files'] = UserFileUpload.objects.all().order_by('upload') # display the files on the page ordered by upload order
     return render(request, 'wiki/upload.html', context) # renderes the upload page with the uploaded files
+
+
+def download(request, path):
+    file_path = os.path.join(settings.MEDIA_ROOT + '/upload', path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404
 
 def test_500_error(request):
     # Return an "Internal Server Error" 500 response code.
